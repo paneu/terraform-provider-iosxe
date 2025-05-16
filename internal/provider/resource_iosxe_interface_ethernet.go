@@ -158,6 +158,10 @@ func (r *InterfaceEthernetResource) Schema(ctx context.Context, req resource.Sch
 					int64validator.Between(1, 4094),
 				},
 			},
+			"encapsulation_second_dot1q": schema.StringAttribute{
+				MarkdownDescription: helpers.NewAttributeDescription("Configure this subinterface as a 1Q-in-1Q subinterface").String,
+				Optional:            true,
+			},
 			"channel_group_number": schema.Int64Attribute{
 				MarkdownDescription: helpers.NewAttributeDescription("").AddIntegerRangeDescription(1, 512).String,
 				Optional:            true,

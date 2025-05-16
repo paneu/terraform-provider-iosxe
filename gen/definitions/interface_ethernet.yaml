@@ -70,6 +70,11 @@ attributes:
     tf_name: encapsulation_dot1q_vlan_id
     exclude_test: true
     example: 666
+  - yang_name: encapsulation/encap-choice/dot1Q/dot1Q/second-dot1q
+    xpath: encapsulation/dot1Q/second-dot1q
+    tf_name: encapsulation_second_dot1q
+    exclude_test: true
+    example: "666"
   - yang_name: Cisco-IOS-XE-ethernet:channel-group/number
     exclude_test: true
     example: 10

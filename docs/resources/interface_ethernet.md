@@ -160,6 +160,7 @@ resource "iosxe_interface_ethernet" "example" {
 - `dot1x_timeout_tx_period` (Number) Timeout for supplicant retries
   - Range: `1`-`65535`
 - `encapsulation_dot1q_vlan_id` (Number) - Range: `1`-`4094`
+- `encapsulation_second_dot1q` (String) Configure this subinterface as a 1Q-in-1Q subinterface
 - `helper_addresses` (Attributes List) Specify a destination address for UDP broadcasts (see [below for nested schema](#nestedatt--helper_addresses))
 - `ip_access_group_in` (String)
 - `ip_access_group_in_enable` (Boolean) inbound packets

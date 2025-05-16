@@ -88,6 +88,7 @@ data "iosxe_interface_ethernet" "example" {
 - `dot1x_timeout_supp_timeout` (Number) Timeout for supplicant reply
 - `dot1x_timeout_tx_period` (Number) Timeout for supplicant retries
 - `encapsulation_dot1q_vlan_id` (Number)
+- `encapsulation_second_dot1q` (String) Configure this subinterface as a 1Q-in-1Q subinterface
 - `helper_addresses` (Attributes List) Specify a destination address for UDP broadcasts (see [below for nested schema](#nestedatt--helper_addresses))
 - `id` (String) The path of the retrieved object.
 - `ip_access_group_in` (String)

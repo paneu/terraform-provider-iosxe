@@ -52,6 +52,7 @@ type InterfaceEthernet struct {
 	Ipv4AddressMask                         types.String                              `tfsdk:"ipv4_address_mask"`
 	Unnumbered                              types.String                              `tfsdk:"unnumbered"`
 	EncapsulationDot1qVlanId                types.Int64                               `tfsdk:"encapsulation_dot1q_vlan_id"`
+	EncapsulationSecondDot1q                types.String                              `tfsdk:"encapsulation_second_dot1q"`
 	ChannelGroupNumber                      types.Int64                               `tfsdk:"channel_group_number"`
 	ChannelGroupMode                        types.String                              `tfsdk:"channel_group_mode"`
 	IpDhcpRelaySourceInterface              types.String                              `tfsdk:"ip_dhcp_relay_source_interface"`
@@ -163,6 +164,7 @@ type InterfaceEthernetData struct {
 	Ipv4AddressMask                         types.String                              `tfsdk:"ipv4_address_mask"`
 	Unnumbered                              types.String                              `tfsdk:"unnumbered"`
 	EncapsulationDot1qVlanId                types.Int64                               `tfsdk:"encapsulation_dot1q_vlan_id"`
+	EncapsulationSecondDot1q                types.String                              `tfsdk:"encapsulation_second_dot1q"`
 	ChannelGroupNumber                      types.Int64                               `tfsdk:"channel_group_number"`
 	ChannelGroupMode                        types.String                              `tfsdk:"channel_group_mode"`
 	IpDhcpRelaySourceInterface              types.String                              `tfsdk:"ip_dhcp_relay_source_interface"`
@@ -341,6 +343,9 @@ func (data InterfaceEthernet) toBody(ctx context.Context) string {
 	}
 	if !data.EncapsulationDot1qVlanId.IsNull() && !data.EncapsulationDot1qVlanId.IsUnknown() {
 		body, _ = sjson.Set(body, helpers.LastElement(data.getPath())+"."+"encapsulation.dot1Q.vlan-id", strconv.FormatInt(data.EncapsulationDot1qVlanId.ValueInt64(), 10))
+	}
+	if !data.EncapsulationSecondDot1q.IsNull() && !data.EncapsulationSecondDot1q.IsUnknown() {
+		body, _ = sjson.Set(body, helpers.LastElement(data.getPath())+"."+"encapsulation.dot1Q.second-dot1q", data.EncapsulationSecondDot1q.ValueString())
 	}
 	if !data.ChannelGroupNumber.IsNull() && !data.ChannelGroupNumber.IsUnknown() {
 		body, _ = sjson.Set(body, helpers.LastElement(data.getPath())+"."+"Cisco-IOS-XE-ethernet:channel-group.number", strconv.FormatInt(data.ChannelGroupNumber.ValueInt64(), 10))
@@ -851,6 +856,11 @@ func (data *InterfaceEthernet) updateFromBody(ctx context.Context, res gjson.Res
 		data.EncapsulationDot1qVlanId = types.Int64Value(value.Int())
 	} else {
 		data.EncapsulationDot1qVlanId = types.Int64Null()
+	}
+	if value := res.Get(prefix + "encapsulation.dot1Q.second-dot1q"); value.Exists() && !data.EncapsulationSecondDot1q.IsNull() {
+		data.EncapsulationSecondDot1q = types.StringValue(value.String())
+	} else {
+		data.EncapsulationSecondDot1q = types.StringNull()
 	}
 	if value := res.Get(prefix + "Cisco-IOS-XE-ethernet:channel-group.number"); value.Exists() && !data.ChannelGroupNumber.IsNull() {
 		data.ChannelGroupNumber = types.Int64Value(value.Int())
@@ -1731,6 +1741,9 @@ func (data *InterfaceEthernet) fromBody(ctx context.Context, res gjson.Result) {
 	if value := res.Get(prefix + "encapsulation.dot1Q.vlan-id"); value.Exists() {
 		data.EncapsulationDot1qVlanId = types.Int64Value(value.Int())
 	}
+	if value := res.Get(prefix + "encapsulation.dot1Q.second-dot1q"); value.Exists() {
+		data.EncapsulationSecondDot1q = types.StringValue(value.String())
+	}
 	if value := res.Get(prefix + "Cisco-IOS-XE-ethernet:channel-group.number"); value.Exists() {
 		data.ChannelGroupNumber = types.Int64Value(value.Int())
 	}
@@ -2232,6 +2245,9 @@ func (data *InterfaceEthernetData) fromBody(ctx context.Context, res gjson.Resul
 	if value := res.Get(prefix + "encapsulation.dot1Q.vlan-id"); value.Exists() {
 		data.EncapsulationDot1qVlanId = types.Int64Value(value.Int())
 	}
+	if value := res.Get(prefix + "encapsulation.dot1Q.second-dot1q"); value.Exists() {
+		data.EncapsulationSecondDot1q = types.StringValue(value.String())
+	}
 	if value := res.Get(prefix + "Cisco-IOS-XE-ethernet:channel-group.number"); value.Exists() {
 		data.ChannelGroupNumber = types.Int64Value(value.Int())
 	}
@@ -2719,6 +2735,9 @@ func (data *InterfaceEthernet) getDeletedItems(ctx context.Context, state Interf
 	}
 	if !state.EncapsulationDot1qVlanId.IsNull() && data.EncapsulationDot1qVlanId.IsNull() {
 		deletedItems = append(deletedItems, fmt.Sprintf("%v/encapsulation/dot1Q/vlan-id", state.getPath()))
+	}
+	if !state.EncapsulationSecondDot1q.IsNull() && data.EncapsulationSecondDot1q.IsNull() {
+		deletedItems = append(deletedItems, fmt.Sprintf("%v/encapsulation/dot1Q/second-dot1q", state.getPath()))
 	}
 	if !state.ChannelGroupNumber.IsNull() && data.ChannelGroupNumber.IsNull() {
 		deletedItems = append(deletedItems, fmt.Sprintf("%v/Cisco-IOS-XE-ethernet:channel-group/number", state.getPath()))
@@ -3348,6 +3367,9 @@ func (data *InterfaceEthernet) getDeletePaths(ctx context.Context) []string {
 	}
 	if !data.EncapsulationDot1qVlanId.IsNull() {
 		deletePaths = append(deletePaths, fmt.Sprintf("%v/encapsulation/dot1Q/vlan-id", data.getPath()))
+	}
+	if !data.EncapsulationSecondDot1q.IsNull() {
+		deletePaths = append(deletePaths, fmt.Sprintf("%v/encapsulation/dot1Q/second-dot1q", data.getPath()))
 	}
 	if !data.ChannelGroupNumber.IsNull() {
 		deletePaths = append(deletePaths, fmt.Sprintf("%v/Cisco-IOS-XE-ethernet:channel-group/number", data.getPath()))

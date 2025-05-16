@@ -122,6 +122,10 @@ func (d *InterfaceEthernetDataSource) Schema(ctx context.Context, req datasource
 				MarkdownDescription: "",
 				Computed:            true,
 			},
+			"encapsulation_second_dot1q": schema.StringAttribute{
+				MarkdownDescription: "Configure this subinterface as a 1Q-in-1Q subinterface",
+				Computed:            true,
+			},
 			"channel_group_number": schema.Int64Attribute{
 				MarkdownDescription: "",
 				Computed:            true,
